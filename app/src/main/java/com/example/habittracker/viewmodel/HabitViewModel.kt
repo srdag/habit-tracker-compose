@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel
 import com.example.habittracker.model.Habit
 
 class HabitViewModel : ViewModel() {
+
     private val _habits = mutableStateListOf<Habit>()
     val habits: List<Habit> = _habits
 
@@ -14,6 +15,12 @@ class HabitViewModel : ViewModel() {
 
     fun addHabit(habit: Habit) {
         _habits.add(habit.copy(id = nextId++))
+    }
+
+    init {
+        addHabit(Habit(title = "Зарядка"))
+        addHabit(Habit(title = "drochka"))
+        addHabit(Habit(title = "son dnem"))
     }
 
     fun updateHabit(habit: Habit) {

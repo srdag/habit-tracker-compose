@@ -1,4 +1,68 @@
 package com.example.habittracker.ui.screens
 
-class HabitListScreen {
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.Card
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.FloatingActionButton
+import androidx.compose.material3.Icon
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
+import com.example.habittracker.R
+import com.example.habittracker.model.Habit
+import com.example.habittracker.viewmodel.HabitViewModel
+
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun HabitListScreen(
+    viewModel: HabitViewModel,
+    addOnHabit: () -> Unit,
+) {
+    Scaffold(
+        topBar = { TopAppBar(title = { Text("Мои привычки") }) },
+        floatingActionButton = {
+            FloatingActionButton(onClick = addOnHabit) {
+                Icon(
+                    painter = painterResource(R.drawable.add),
+                    contentDescription = null,
+                )
+            }
+        },
+    ) { paddingValues ->
+        LazyColumn(
+            modifier = Modifier
+                .padding(paddingValues)
+                .fillMaxSize()
+        ) {
+            items(viewModel.habits) { habit ->
+                HabitItem(habit = habit)
+            }
+        }
+    }
 }
+
+@Composable
+fun HabitItem(habit: Habit) {
+    Card() {
+        Row() {
+
+            Column() {
+                Text("${habit.icon} ${habit.title}")
+                Text("Прогресс: ${habit.progress} / ${habit.goal}")
+                Text(habit.frequency.name)
+            }
+
+        }
+    }
+}
+
