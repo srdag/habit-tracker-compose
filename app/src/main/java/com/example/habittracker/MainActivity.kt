@@ -11,6 +11,8 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.habittracker.ui.screens.HabitListScreen
 import com.example.habittracker.ui.theme.HabitTrackerTheme
 import com.example.habittracker.viewmodel.HabitViewModel
 
@@ -20,6 +22,7 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             val viewModel: HabitViewModel = viewModel()
+            HabitListScreen(viewModel) {}
         }
     }
 }
