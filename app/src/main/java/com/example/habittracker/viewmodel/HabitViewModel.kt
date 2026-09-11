@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel
 import com.example.habittracker.model.Habit
 
 class HabitViewModel : ViewModel() {
+
     private val _habits = mutableStateListOf<Habit>()
     val habits: List<Habit> = _habits
 
