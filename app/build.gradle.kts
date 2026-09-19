@@ -49,6 +49,7 @@ dependencies {
     implementation(libs.androidx.core.ktx)
     //noinspection GradleDependency
     implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.11.0")
+    implementation("androidx.compose.material:material-icons-core:1.7.8")
     implementation("androidx.navigation:navigation-compose:2.8.4")
     implementation(libs.androidx.lifecycle.runtime.ktx)
     testImplementation(libs.junit)

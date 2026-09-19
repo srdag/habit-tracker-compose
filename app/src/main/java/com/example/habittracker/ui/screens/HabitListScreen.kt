@@ -1,6 +1,7 @@
 package com.example.habittracker.ui.screens
 
-import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -17,6 +18,7 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.unit.dp
 import com.example.habittracker.R
 import com.example.habittracker.model.Habit
 import com.example.habittracker.viewmodel.HabitViewModel
@@ -26,12 +28,13 @@ import com.example.habittracker.viewmodel.HabitViewModel
 @Composable
 fun HabitListScreen(
     viewModel: HabitViewModel,
-    addOnHabit: () -> Unit,
+    onAddHabit: () -> Unit,
+    onHabitClick: (Habit) -> Unit
 ) {
     Scaffold(
         topBar = { TopAppBar(title = { Text("Мои привычки") }) },
         floatingActionButton = {
-            FloatingActionButton(onClick = addOnHabit) {
+            FloatingActionButton(onClick = onAddHabit) {
                 Icon(
                     painter = painterResource(R.drawable.add),
                     contentDescription = null,
@@ -42,18 +45,19 @@ fun HabitListScreen(
         LazyColumn(
             modifier = Modifier
                 .padding(paddingValues)
-                .fillMaxSize()
+                .fillMaxSize(),
+            verticalArrangement = Arrangement.spacedBy(12.dp)
         ) {
             items(viewModel.habits) { habit ->
-                HabitItem(habit = habit)
+                HabitItem(habit = habit, modifier = Modifier.clickable { onHabitClick(habit) })
             }
         }
     }
 }
 
 @Composable
-fun HabitItem(habit: Habit) {
-    Card() {
+fun HabitItem(habit: Habit, modifier: Modifier) {
+    Card(modifier) {
         Row() {
 
             Column() {

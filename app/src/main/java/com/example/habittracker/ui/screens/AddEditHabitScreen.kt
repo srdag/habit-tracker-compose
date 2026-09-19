@@ -59,6 +59,8 @@ fun AddEditHabitScreen(
 
     var goalError by remember { mutableStateOf(false) }
 
+    val existingHabit = habitId?.let { id -> viewModel.habits.firstOrNull { it.id == id } }
+
     Scaffold(
         topBar = {
             TopAppBar(
@@ -144,15 +146,29 @@ fun AddEditHabitScreen(
                     goalError = !isGoalValid
 
                     if (isTitleValid && isGoalValid) {
-                        viewModel.addHabit(
-                            Habit(
-                                title = textFieldHeader,
-                                description = textFieldDescription,
-                                icon = selectedIcon,
-                                frequency = frequency,
-                                goal = goalInt
+                        if (existingHabit == null) {
+                            viewModel.addHabit(
+                                Habit(
+                                    title = textFieldHeader,
+                                    description = textFieldDescription,
+                                    icon = selectedIcon,
+                                    frequency = frequency,
+                                    goal = goalInt
+                                )
                             )
-                        )
+                        } else {
+                            viewModel.updateHabit(
+                                Habit(
+                                    id = existingHabit.id,
+                                    title = textFieldHeader,
+                                    description = textFieldDescription,
+                                    icon = selectedIcon,
+                                    frequency = frequency,
+                                    goal = goalInt
+                                )
+                            )
+                        }
+
                         onNavigationBack()
                     }
                 }
